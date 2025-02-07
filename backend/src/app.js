@@ -95,7 +95,7 @@ app.use(express.json());
 app.use('/api', routes);
 
 // Serve static files from the frontend build directory
-const frontendPath = path.join(__dirname, '../../frontend/dist');
+const frontendPath = path.join(__dirname, '../frontend/dist');
 app.use(express.static(frontendPath));
 
 // Catch-all route to serve `index.html` for any non-API request
