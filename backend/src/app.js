@@ -6,6 +6,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import routes from './routes/index.js';
+import path from 'path';
 
 dotenv.config();
 
@@ -25,6 +26,14 @@ app.use(express.json());
 
 // Routes
 app.use('/api', routes);
+
+// Serve static files from the frontend build directory
+app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+
+// Catch-all route to serve index.html for any non-API requests
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
+});
 
 // WebSocket events
 io.on('connection', (socket) => {
