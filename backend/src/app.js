@@ -94,7 +94,22 @@ app.use(express.json());
 // Routes
 app.use('/api', routes);
 
+// 🔥 Fix frontend serving path
+const frontendPath = path.join(__dirname, '../../frontend/dist'); // Ensure correct path
+console.log('Serving frontend from:', frontendPath); // Debugging output
 
+// Serve static files
+app.use(express.static(frontendPath));
+
+// Serve React frontend for all non-API routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'), (err) => {
+    if (err) {
+      console.error('Error sending index.html:', err);
+      res.status(500).send(err);
+    }
+  });
+});
 
 // WebSocket events
 io.on('connection', (socket) => {
@@ -120,14 +135,6 @@ mongoose.connect(process.env.MONGODB_URI)
 
 const PORT = process.env.PORT || 5000;
 httpServer.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
 
-// Serve static files from the frontend build directory
-const frontendPath = path.join(__dirname, '../../frontend/dist');
-app.use(express.static(frontendPath));
-
-// Catch-all route to serve `index.html` for any non-API request
-app.get('*', (req, res) => {
-  res.sendFile(path.join(frontendPath, 'index.html'));
-});
