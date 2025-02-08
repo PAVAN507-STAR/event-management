@@ -112,7 +112,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Made with ❤️ by [Arbaz].
+Made with ❤️ by Pavan Kumar.
 ```
 
 This `README.md` provides an overview of your project, instructions for running it locally, and the technology stack used. Feel free to modify it according to your preferences and project-specific details!
